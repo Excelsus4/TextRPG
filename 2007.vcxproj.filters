@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Mob.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="TextRPG.cpp" />
+    <ClCompile Include="Calculation.cpp" />
+    <ClCompile Include="Equipment.cpp" />
+    <ClCompile Include="Library.cpp" />
+    <ClCompile Include="statistics.cpp" />
+    <ClCompile Include="RandomEngine.cpp" />
+    <ClCompile Include="Scrap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Mob.h" />
+    <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="IEntity.h" />
+    <ClInclude Include="TextRPG.h" />
+    <ClInclude Include="IEngine.h" />
+    <ClInclude Include="IDamager.h" />
+    <ClInclude Include="Calculation.h" />
+    <ClInclude Include="Equipment.h" />
+    <ClInclude Include="statistics.h" />
+    <ClInclude Include="Library.h" />
+    <ClInclude Include="RandomEngine.h" />
+    <ClInclude Include="Scrap.h" />
+    <ClInclude Include="GainChance.h" />
+  </ItemGroup>
+</Project>
