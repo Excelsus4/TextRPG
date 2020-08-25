@@ -24,6 +24,7 @@ private:
 	void TryToGetItem(GainChance c);
 	int PrintInventory();
 	int GetInput();
+	bool RemoveItemSafely(vector<Item*>::iterator item);
 
 	Player* player;
 	vector<Item*> inventory;

@@ -199,9 +199,10 @@ void TextRPG::ShopInteract()
 					string lastCheck;
 					cin >> lastCheck;
 					if (lastCheck == "Y") {
-						GainGold(value);
-						//TODO: Delete Item, safely
-						// If Item is equiped, do it safely. I mean it
+						if(RemoveItemSafely(inventory.begin()+input))
+							GainGold(value);
+						else
+							cout << "장착되어있는 아이템은 판매할 수 없습니다." << endl;
 					}
 					else {
 						cout << "거래를 취소했습니다." << endl;
@@ -267,4 +268,26 @@ int TextRPG::GetInput()
 	cin >> input;
 	
 	return input;
+}
+
+bool TextRPG::RemoveItemSafely(vector<Item*>::iterator item)
+{
+	if (Equipment* equipment = dynamic_cast<Equipment*>(*item)) {
+		// Check equipment list and find match.
+		if(player->isEquiped(equipment)){
+			return false;
+		}
+		else {
+			inventory.erase(item);
+			delete equipment;
+			return true;
+		}
+	}
+	else if (Scrap* scrap = dynamic_cast<Scrap*>(*item)) {
+		inventory.erase(item);
+		delete scrap;
+		return true;
+	}
+	cout << "Exception: 정의되지 않은 아이템 타입입니다 @ TextRPG::RemoveItemSafely" << endl;
+	return false;
 }

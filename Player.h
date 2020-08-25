@@ -12,7 +12,8 @@ public:
 	virtual bool DealDamage(int damage, float accuracy, float criticalChance) override;
 	void DisplayStat();
 	void GainEXP(int amount);
-	Equipment* Equip(Equipment* equipment);
+	void Equip(Equipment* equipment);
+	bool isEquiped(Equipment* equipment);
 private:
 	int* MainStat;
 	int* SubStat;

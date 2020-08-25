@@ -10,6 +10,8 @@ Player::Player(statistics stat):
 	SubStat = &CalculatedStats.Agility;
 	Exp = 0;
 	RequiredExp = Calculation::GetRequiredEXP(Statistics.Level);
+	Equipments[EquipmentType::Weapon] = nullptr;
+	Equipments[EquipmentType::BodyArmor] = nullptr;
 }
 
 Player::~Player()
@@ -84,20 +86,26 @@ void Player::GainEXP(int amount)
 	}
 }
 
-Equipment* Player::Equip(Equipment* equipment)
+void Player::Equip(Equipment* equipment)
 {
-	Equipment* ret = nullptr;
-	cout << equipment->GetName() << "을(를) 장착했다!" << endl;
-	auto it = Equipments.find(equipment->GetSlot());
-	if (it == Equipments.end()) {
-		Equipments[equipment->GetSlot()] = equipment;
+	if (Equipments[equipment->GetSlot()] == equipment) {
+		// 장착되어있는 것이랑 같은것
+		cout << equipment->GetName() << "을(를) 해제했다!" << endl;
+		Equipments[equipment->GetSlot()] = nullptr;
 	}
 	else {
-		ret = it->second;
-		it->second = equipment;
+		cout << equipment->GetName() << "을(를) 장착했다!" << endl;
+		Equipments[equipment->GetSlot()] = equipment;
 	}
 	RecalculateStat();
-	return ret;
+}
+
+bool Player::isEquiped(Equipment * equipment)
+{
+	if (Equipments[equipment->GetSlot()] == equipment)
+		return true;
+	else
+		return false;
 }
 
 int Player::CalculateStatDamage()
@@ -115,9 +123,8 @@ void Player::PrintDualNumeric(int sum, int a)
 void Player::PrintEquipment(string typeString, EquipmentType::slot typeSlot)
 {
 	cout << typeString<<"\t: ";
-	auto it = Equipments.find(typeSlot);
-	if (it != Equipments.end())
-		cout << it->second->GetName();
+	if (Equipments[typeSlot] != nullptr)
+		cout << Equipments[typeSlot]->GetName();
 	cout << endl;
 }
 
@@ -125,7 +132,8 @@ void Player::RecalculateStat()
 {
 	CalculatedStats = Statistics;
 	for (auto equipPair : Equipments) {
-		CalculatedStats = CalculatedStats + equipPair.second->GetStat();
+		if(equipPair.second != nullptr)
+			CalculatedStats = CalculatedStats + equipPair.second->GetStat();
 	}
 }
 
