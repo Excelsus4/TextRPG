@@ -20,23 +20,6 @@ Name(src.GetName()), Description(src.GetDescription()), Value(src.GetValue()), S
 {
 }
 
-Scrap & Scrap::operator+(int amount)
-{
-	StackedAmount += amount;
-	return *this;
-}
-
-Scrap & Scrap::operator*(int amount)
-{
-	StackedAmount *= amount;
-	return *this;
-}
-
-Scrap & Scrap::operator+=(int amount)
-{
-	// TODO: 여기에 반환 구문을 삽입합니다.
-}
-
 string Scrap::GetName() const
 {
 	return Name;
@@ -55,4 +38,14 @@ string Scrap::GetDescription() const
 int Scrap::GetAmount() const
 {
 	return StackedAmount;
+}
+
+void Scrap::StackItem(int amount)
+{
+	StackedAmount += amount;
+}
+
+int Scrap::Sell() const
+{
+	return GetValue() * GetAmount();
 }

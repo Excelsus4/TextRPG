@@ -8,10 +8,11 @@ class TextRPG
 {
 public:
 	TextRPG();
-	~TextRPG();
+	virtual ~TextRPG();
 	void Run();
 	void GainItem(Equipment* item);
 	void GainItem(Scrap* item);
+	void GainGold(int gold);
 private:
 	void PrintTitle();
 	int MainMenu();
@@ -21,6 +22,8 @@ private:
 	void ShopInteract();
 	void UseItem(Item* item);
 	void TryToGetItem(GainChance c);
+	int PrintInventory();
+	int GetInput();
 
 	Player* player;
 	vector<Item*> inventory;

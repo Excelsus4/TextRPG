@@ -78,17 +78,24 @@ void TextRPG::GainItem(Equipment* item)
 void TextRPG::GainItem(Scrap* item)
 {
 	cout << item->GetName() << "을(를) " << item->GetAmount() << "개 획득했다!" << endl;
-	//TODO: 기존 것이랑 중복된 아이템은 스택시키기
-	auto exist = stackItemHash.find(item->GetName);
+	// 기존 것이랑 중복된 아이템은 스택시키기
+	unordered_map<string, vector<Item*>::iterator>::iterator exist = stackItemHash.find(item->GetName());
 	if (exist == stackItemHash.end()) {
-		//새로운 아이템
+		// 새로운 아이템
 		inventory.push_back(item);
 		stackItemHash[item->GetName()] = inventory.end() - 1;
 	}
 	else {
 		//기존에 있는 아이템
+		(*exist->second)->StackItem(item->GetAmount());
 		delete item;
 	}
+}
+
+void TextRPG::GainGold(int gold)
+{
+	cout << gold << "골드를 획득했다!" << endl;
+	this->gold += gold;
 }
 
 void TextRPG::PrintTitle()
@@ -106,8 +113,7 @@ int TextRPG::MainMenu()
 	cout << "6. 인벤토리" << endl;
 	cout << "7. 상인" << endl;
 	cout << "0. 게임종료" << endl;
-	cout << "입력> ";
-	cin >> sel;
+	sel = GetInput();
 	return sel;
 }
 
@@ -150,16 +156,10 @@ bool TextRPG::RandomEncounter()
 
 void TextRPG::InventoryInteract()
 {
-	int input;
-	int isize = inventory.size();
+	int input, isize;
 	cout << endl << "인벤토리" << endl;
-	for (int i = 0; i < isize;i++) {
-		cout << i << ". " << inventory[i]->GetName() << endl;
-	}
-	cout << "소지금: "<<gold << "골드" << endl;
-	cout << "-1. 돌아가기" << endl;
-	cout << "입력> ";
-	cin >> input;
+	isize = PrintInventory();
+	input = GetInput();
 	if (input < 0)
 		return;
 	else if (input < isize)
@@ -172,22 +172,53 @@ void TextRPG::InventoryInteract()
 void TextRPG::ShopInteract()
 {
 	int input;
-	cout << endl << "상점" << endl;
-	cout << "1. 구매" << endl;
-	cout << "2. 판매" << endl;
-	cout << "-1. 돌아가기" << endl;
-	cout << "입력> " << endl;
-	cin >> input;
-	if (input < 0)
-		return;
-	else if (input == 1) {
-		//TODO: 구매 파트
-	}
-	else if (input == 2) {
-		//TODO: 판매 파트
-	}
-	else {
-		cout << "알 수 없는 명령입니다." << endl;
+	while (true) {
+		cout << endl << "상점" << endl;
+		cout << "1. 구매" << endl;
+		cout << "2. 판매" << endl;
+		cout << "-1. 돌아가기" << endl;
+		input = GetInput();
+		if (input < 0)
+			return;
+		else if (input == 1) {
+			//TODO: 구매 파트
+			cout << "미구현된 상인의 구매기능" << endl;
+		}
+		else if (input == 2) {
+			//TODO: 판매 파트
+			while (true) {
+				cout << endl << "판매하기" << endl;
+				int isize = PrintInventory();
+				input = GetInput();
+				if (input < 0)
+					break;
+				else if (input < isize) {
+					// 해당 아이템 팔기
+					int value = inventory[input]->Sell();
+					cout << inventory[input]->GetName() << "을(를) " << value << "골드에 파시겠습니까?" << endl;
+					cout << "(Y/N)> ";
+					string lastCheck;
+					cin >> lastCheck;
+					if (lastCheck == "Y") {
+						GainGold(value);
+						//TODO: Delete Item, safely
+						// If Item is equiped, do it safely. I mean it
+					}
+					else {
+						cout << "거래를 취소했습니다." << endl;
+						continue;
+					}
+				}
+				else {
+					cout << "잘못된 아이템 인덱스" << endl;
+					continue;
+				}
+			}
+		}
+		else {
+			cout << "알 수 없는 명령입니다." << endl;
+			continue;
+		}
 	}
 }
 
@@ -216,4 +247,25 @@ void TextRPG::TryToGetItem(GainChance c)
 			GainItem(new Scrap(*scrap, aDice(*Random::gen)));
 		}
 	}
+}
+
+int TextRPG::PrintInventory()
+{
+	int isize = inventory.size();
+	for (int i = 0; i < isize; i++) {
+		cout << i << ". " << inventory[i]->GetName() << endl;
+	}
+	cout << "소지금: " << gold << "골드" << endl;
+	cout << "-1. 돌아가기" << endl;
+
+	return isize;
+}
+
+int TextRPG::GetInput()
+{
+	int input;
+	cout << "입력> ";
+	cin >> input;
+	
+	return input;
 }

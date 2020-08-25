@@ -20,6 +20,8 @@ public:
 	statistics GetStat() const { return Statistics; };
 	virtual string GetName() const override;
 	virtual int GetValue() const override;
+	virtual void StackItem(int amount) override;
+	virtual int Sell() const override;
 private:
 	EquipmentType::slot Slot;
 	statistics Statistics;

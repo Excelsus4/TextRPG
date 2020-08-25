@@ -24,3 +24,15 @@ int Equipment::GetValue() const
 {
 	return 0;
 }
+
+void Equipment::StackItem(int amount)
+{
+	// 같은 아이템을 제물삼아서 강화?
+	cout << "Exception: 미구현된 함수 호출 @ Equipment::StackItem(int)" << endl;
+	return;
+}
+
+int Equipment::Sell() const
+{
+	return GetValue();
+}
