@@ -7,7 +7,6 @@
 
 TextRPG::TextRPG()
 {
-	
 	// 플레이어 초기화
 	statistics temp;
 	temp.Name = "플레이어";
