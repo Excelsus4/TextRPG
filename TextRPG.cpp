@@ -284,6 +284,7 @@ bool TextRPG::RemoveItemSafely(vector<Item*>::iterator item)
 		}
 	}
 	else if (Scrap* scrap = dynamic_cast<Scrap*>(*item)) {
+		stackItemHash.erase(scrap->GetName());
 		inventory.erase(item);
 		delete scrap;
 		return true;
