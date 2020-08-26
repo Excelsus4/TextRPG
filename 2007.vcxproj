@@ -32,6 +32,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RandomEngine.cpp" />
     <ClCompile Include="Scrap.cpp" />
+    <ClCompile Include="ShopNPC.cpp" />
     <ClCompile Include="statistics.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -53,6 +54,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RandomEngine.h" />
     <ClInclude Include="Scrap.h" />
+    <ClInclude Include="ShopNPC.h" />
     <ClInclude Include="statistics.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TextRPG.h" />
