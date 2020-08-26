@@ -184,7 +184,7 @@ void TextRPG::ShopInteract()
 			cout << "미구현된 상인의 구매기능" << endl;
 		}
 		else if (input == 2) {
-			//TODO: 판매 파트
+			//판매 파트
 			while (true) {
 				cout << endl << "판매하기" << endl;
 				int isize = PrintInventory();
