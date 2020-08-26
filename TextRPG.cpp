@@ -24,6 +24,7 @@ TextRPG::TextRPG()
 	villageShop = new ShopNPC({
 		make_pair(new Equipment(*library.GetEquipByIndex(0)), 100),
 		make_pair(new Equipment(*library.GetEquipByIndex(1)), 35),
+		make_pair(new Equipment(*library.GetEquipByIndex(3)), 800),
 		make_pair(new Equipment(*library.GetEquipByIndex(2)), 3500)});
 }
 
@@ -160,18 +161,19 @@ bool TextRPG::RandomEncounter()
 void TextRPG::InventoryInteract()
 {
 	int input, isize;
-	cout << endl << "인벤토리" << endl;
-	isize = PrintInventory();
-	cout << "소지금: " << gold << "골드" << endl;
-	cout << "-1. 돌아가기" << endl;
-	input = GetInput();
-	if (input < 0)
-		return;
-	else if (input < isize)
-		UseItem(inventory[input]);
-	else
-		cout << "잘못된 아이템 인덱스" << endl;
-	return;
+	while (true) {
+		cout << endl << "인벤토리" << endl;
+		isize = PrintInventory();
+		cout << "소지금: " << gold << "골드" << endl;
+		cout << "-1. 돌아가기" << endl;
+		input = GetInput();
+		if (input < 0)
+			return;
+		else if (input < isize)
+			UseItem(inventory[input]);
+		else
+			cout << "잘못된 아이템 인덱스" << endl;
+	}
 }
 
 void TextRPG::ShopInteract()

@@ -32,9 +32,19 @@ Library::Library()
 	stat.Agility = 15;
 	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat));
 
+	stat.Name = "요도 무라마사";
+	stat.Hp = -10;
+	stat.Attack = 75;
+	stat.Level = 0;
+	stat.Strength = 0;
+	stat.Agility = 20;
+	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat));
+
 	// 스크랩 프로토타입 생성
 	ScrapBook.push_back(new Scrap("고블린의 귀", "신선하게 잘라낸 녹색 귀", 4));
 	ScrapBook.push_back(new Scrap("오크의 코", "신선하게 잘라낸 오크의 코", 12));
+	ScrapBook.push_back(new Scrap("마석", "몬스터 시체에서 레어하게 나오는 보석", 3000));
+	ScrapBook.push_back(new Scrap("오우거의 털", "오우거에 털이 어디있어?", 60));
 
 	// 몬스터 프로토타입 생성
 	stat.Name = "고블린";
@@ -43,15 +53,29 @@ Library::Library()
 	stat.Level = 1;
 	stat.Strength = 0;
 	stat.Agility = 0;
-	MonsterBook.push_back(new Mob(stat, 7, { GainChance(ScrapBook[0], .6f, 1, 2) }));
+	MonsterBook.push_back(new Mob(stat, 7, { 
+		GainChance(ScrapBook[0], .6f, 1, 2),
+		GainChance(ScrapBook[2], .01f, 1, 1) }));
 
 	stat.Name = "오크";
-	stat.Hp = 160;
-	stat.Attack = 12;
+	stat.Hp = 320;
+	stat.Attack = 20;
 	stat.Level = 3;
 	stat.Strength = 0;
 	stat.Agility = 0;
-	MonsterBook.push_back(new Mob(stat, 21, { GainChance(ScrapBook[1], .8f, 1, 1) }));
+	MonsterBook.push_back(new Mob(stat, 21, { 
+		GainChance(ScrapBook[1], .8f, 1, 1),
+		GainChance(ScrapBook[2], .03f, 1, 1) }));
+
+	stat.Name = "오우거";
+	stat.Hp = 1600;
+	stat.Attack = 75;
+	stat.Level = 15;
+	stat.Strength = 0;
+	stat.Agility = 0;
+	MonsterBook.push_back(new Mob(stat, 21, {
+		GainChance(ScrapBook[3], .3f, 1, 15),
+		GainChance(ScrapBook[2], .15f, 1, 1) }));
 }
 
 Library::~Library()
