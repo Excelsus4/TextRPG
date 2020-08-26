@@ -4,6 +4,8 @@
 #include "Player.h"
 #include "Item.h"
 #include "Library.h"
+#include "ShopNPC.h"
+
 class TextRPG
 {
 public:
@@ -31,5 +33,6 @@ private:
 	int gold;
 	Library library;
 	unordered_map<string, vector<Item*>::iterator> stackItemHash;
+	ShopNPC* villageShop;
 };
 

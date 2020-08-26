@@ -7,7 +7,7 @@ public:
 	ShopNPC(vector<pair<Item*, int>> salesList);
 	virtual ~ShopNPC();
 	void GetShoppingList() const;
-	bool BuyItem(int index, int money);
+	Item* BuyItem(size_t index, int& money);
 private:
 	vector<pair<Item*, int>> itemStand;
 };

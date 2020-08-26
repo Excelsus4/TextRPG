@@ -18,9 +18,12 @@ TextRPG::TextRPG()
 	player = new Player(temp);
 
 	// 초기장비 지급
-	gold = 0;
-	GainItem(new Equipment(*library.GetEquipByIndex(0)));
-	GainItem(new Equipment(*library.GetEquipByIndex(1)));
+	gold = 100;
+
+	// 마을 상인 초기화
+	villageShop = new ShopNPC({
+		make_pair(new Equipment(*library.GetEquipByIndex(0)), 100),
+		make_pair(new Equipment(*library.GetEquipByIndex(1)), 35)});
 }
 
 TextRPG::~TextRPG()
@@ -59,7 +62,7 @@ void TextRPG::Run()
 		case 7:
 			ShopInteract();
 			break;
-		case 0:
+		case -1:
 			cout << "System: 게임을 종료합니다." << endl;
 			return;
 		default:
@@ -111,7 +114,7 @@ int TextRPG::MainMenu()
 	cout << "4. 캐릭터 상태창" << endl;
 	cout << "6. 인벤토리" << endl;
 	cout << "7. 상인" << endl;
-	cout << "0. 게임종료" << endl;
+	cout << "-1. 게임종료" << endl;
 	sel = GetInput();
 	return sel;
 }
@@ -158,6 +161,8 @@ void TextRPG::InventoryInteract()
 	int input, isize;
 	cout << endl << "인벤토리" << endl;
 	isize = PrintInventory();
+	cout << "소지금: " << gold << "골드" << endl;
+	cout << "-1. 돌아가기" << endl;
 	input = GetInput();
 	if (input < 0)
 		return;
@@ -180,14 +185,35 @@ void TextRPG::ShopInteract()
 		if (input < 0)
 			return;
 		else if (input == 1) {
-			//TODO: 구매 파트
-			cout << "미구현된 상인의 구매기능" << endl;
+			// 구매 파트
+			while (true) {
+				cout << endl << "구매하기" << endl;
+				villageShop->GetShoppingList();
+				cout << "소지금: " << gold << "골드" << endl;
+				cout << "-1. 돌아가기" << endl;
+				input = GetInput();
+				if (input < 0)
+					break;
+				else {
+					Item* get = villageShop->BuyItem(input, gold);
+					if (get != nullptr) {
+						if (Equipment* equipment = dynamic_cast<Equipment*>(get)) {
+							GainItem(new Equipment(*equipment));
+						}
+						else if (Scrap* scrap = dynamic_cast<Scrap*>(get)) {
+							GainItem(new Scrap(*scrap));
+						}
+					}
+				}
+			}
 		}
 		else if (input == 2) {
 			//판매 파트
 			while (true) {
 				cout << endl << "판매하기" << endl;
 				int isize = PrintInventory();
+				cout << "소지금: " << gold << "골드" << endl;
+				cout << "-1. 돌아가기" << endl;
 				input = GetInput();
 				if (input < 0)
 					break;
@@ -255,8 +281,6 @@ int TextRPG::PrintInventory()
 	for (int i = 0; i < isize; i++) {
 		cout << i << ". " << inventory[i]->GetName() << endl;
 	}
-	cout << "소지금: " << gold << "골드" << endl;
-	cout << "-1. 돌아가기" << endl;
 
 	return isize;
 }
