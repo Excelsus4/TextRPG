@@ -32,7 +32,7 @@ void Player::Update(IEngine* engine)
 		cout << endl << Statistics.Name << "Àº(´Â) ";
 		{
 			auto weaponIterator = Equipments.find(EquipmentType::Weapon);
-			if (weaponIterator == Equipments.end())
+			if (weaponIterator->second == nullptr)
 				cout << "ÁÖ¸Ô";
 			else
 				cout << weaponIterator->second->GetName();

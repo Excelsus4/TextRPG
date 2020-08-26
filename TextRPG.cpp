@@ -23,7 +23,8 @@ TextRPG::TextRPG()
 	// 마을 상인 초기화
 	villageShop = new ShopNPC({
 		make_pair(new Equipment(*library.GetEquipByIndex(0)), 100),
-		make_pair(new Equipment(*library.GetEquipByIndex(1)), 35)});
+		make_pair(new Equipment(*library.GetEquipByIndex(1)), 35),
+		make_pair(new Equipment(*library.GetEquipByIndex(2)), 3500)});
 }
 
 TextRPG::~TextRPG()

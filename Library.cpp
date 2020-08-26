@@ -24,6 +24,14 @@ Library::Library()
 	stat.Agility = 0;
 	EquipmentBook.push_back(new Equipment(EquipmentType::BodyArmor, stat));
 
+	stat.Name = "전설의 엑스칼리버";
+	stat.Hp = 80;
+	stat.Attack = 145;
+	stat.Level = 0;
+	stat.Strength = 30;
+	stat.Agility = 15;
+	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat));
+
 	// 스크랩 프로토타입 생성
 	ScrapBook.push_back(new Scrap("고블린의 귀", "신선하게 잘라낸 녹색 귀", 4));
 	ScrapBook.push_back(new Scrap("오크의 코", "신선하게 잘라낸 오크의 코", 12));
@@ -43,7 +51,7 @@ Library::Library()
 	stat.Level = 3;
 	stat.Strength = 0;
 	stat.Agility = 0;
-	MonsterBook.push_back(new Mob(stat, 21, {}));
+	MonsterBook.push_back(new Mob(stat, 21, { GainChance(ScrapBook[1], .8f, 1, 1) }));
 }
 
 Library::~Library()
