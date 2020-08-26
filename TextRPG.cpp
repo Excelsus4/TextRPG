@@ -82,15 +82,15 @@ void TextRPG::GainItem(Scrap* item)
 {
 	cout << item->GetName() << "을(를) " << item->GetAmount() << "개 획득했다!" << endl;
 	// 기존 것이랑 중복된 아이템은 스택시키기
-	unordered_map<string, vector<Item*>::iterator>::iterator exist = stackItemHash.find(item->GetName());
+	unordered_map<string, Item*>::iterator exist = stackItemHash.find(item->GetName());
 	if (exist == stackItemHash.end()) {
 		// 새로운 아이템
 		inventory.push_back(item);
-		stackItemHash[item->GetName()] = inventory.end() - 1;
+		stackItemHash[item->GetName()] = *(inventory.end() - 1);
 	}
 	else {
 		//기존에 있는 아이템
-		(*exist->second)->StackItem(item->GetAmount());
+		exist->second->StackItem(item->GetAmount());
 		delete item;
 	}
 }

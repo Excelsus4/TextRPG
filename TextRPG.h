@@ -32,7 +32,7 @@ private:
 	vector<Item*> inventory;
 	int gold;
 	Library library;
-	unordered_map<string, vector<Item*>::iterator> stackItemHash;
+	unordered_map<string, Item*> stackItemHash;
 	ShopNPC* villageShop;
 };
 
