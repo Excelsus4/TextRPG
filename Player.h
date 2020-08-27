@@ -14,6 +14,7 @@ public:
 	void GainEXP(int amount);
 	void Equip(Equipment* equipment);
 	bool isEquiped(Equipment* equipment);
+	virtual void Heal(int amount) override;
 private:
 	int* MainStat;
 	int* SubStat;

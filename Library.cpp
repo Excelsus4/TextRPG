@@ -46,6 +46,9 @@ Library::Library()
 	ScrapBook.push_back(new Scrap("마석", "몬스터 시체에서 레어하게 나오는 보석", 3000));
 	ScrapBook.push_back(new Scrap("오우거의 털", "오우거에 털이 어디있어?", 60));
 
+	// 포션 프로토타입 생성
+	HpPotionBook.push_back(new HealthPotion("체력포션", "평범한 체력포션이다. 체력을 100 채워준다.", 100, 5));
+
 	// 몬스터 프로토타입 생성
 	stat.Name = "고블린";
 	stat.Hp = 70;
@@ -94,6 +97,11 @@ Library::~Library()
 	for (Scrap* eq : ScrapBook) {
 		delete eq;
 	}
+
+	// 스크랩 메모리 해제
+	for (HealthPotion* hp : HpPotionBook) {
+		delete hp;
+	}
 }
 
 Mob* Library::GetMobByIndex(int index)
@@ -109,4 +117,9 @@ Equipment * Library::GetEquipByIndex(int index)
 Scrap * Library::GetScrapByIndex(int index)
 {
 	return ScrapBook[index];
+}
+
+HealthPotion* Library::GetHpPotionByIndex(int index)
+{
+	return HpPotionBook[index];
 }

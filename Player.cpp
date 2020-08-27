@@ -108,6 +108,15 @@ bool Player::isEquiped(Equipment * equipment)
 		return false;
 }
 
+void Player::Heal(int amount)
+{
+	cout << Statistics.Name << "의 체력이 " << Status.Hp << "에서 ";
+	Status.Hp += amount;
+	if (Status.Hp > CalculatedStats.Hp)
+		Status.Hp = CalculatedStats.Hp;
+	cout << Status.Hp << "(으)로 회복되었다!" << endl;
+}
+
 int Player::CalculateStatDamage()
 {
 	return CalculatedStats.Attack*(*MainStat)+(*SubStat);
@@ -143,8 +152,8 @@ void Player::LevelUp()
 	Statistics.Strength += 3;
 	++Statistics.Agility;
 	Statistics.Hp += 35;
-	Status.Hp = Statistics.Hp;
 	RequiredExp = Calculation::GetRequiredEXP(Statistics.Level);
 	cout << "레벨이 " << Statistics.Level << "(으)로 올랐다!" << endl;
 	RecalculateStat();
+	Status.Hp = Statistics.Hp;
 }

@@ -12,8 +12,7 @@ public:
 	TextRPG();
 	virtual ~TextRPG();
 	void Run();
-	void GainItem(Equipment* item);
-	void GainItem(Scrap* item);
+	void GainItem(Item* item);
 	void GainGold(int gold);
 private:
 	void PrintTitle();

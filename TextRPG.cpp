@@ -25,7 +25,8 @@ TextRPG::TextRPG()
 		make_pair(new Equipment(*library.GetEquipByIndex(0)), 100),
 		make_pair(new Equipment(*library.GetEquipByIndex(1)), 35),
 		make_pair(new Equipment(*library.GetEquipByIndex(3)), 800),
-		make_pair(new Equipment(*library.GetEquipByIndex(2)), 3500)});
+		make_pair(new Equipment(*library.GetEquipByIndex(2)), 3500),
+		make_pair(new HealthPotion(*library.GetHpPotionByIndex(0)), 25)});
 }
 
 TextRPG::~TextRPG()
@@ -73,26 +74,26 @@ void TextRPG::Run()
 	}
 }
 
-void TextRPG::GainItem(Equipment* item)
+void TextRPG::GainItem(Item* item)
 {
-	cout << item->GetName() << "을(를) 획득했다!" << endl;
-	inventory.push_back(item);
-}
-
-void TextRPG::GainItem(Scrap* item)
-{
-	cout << item->GetName() << "을(를) " << item->GetAmount() << "개 획득했다!" << endl;
-	// 기존 것이랑 중복된 아이템은 스택시키기
-	unordered_map<string, Item*>::iterator exist = stackItemHash.find(item->GetName());
-	if (exist == stackItemHash.end()) {
-		// 새로운 아이템
-		inventory.push_back(item);
-		stackItemHash[item->GetName()] = *(inventory.end() - 1);
+	if (item->isStackable()) {
+		cout << item->GetName() << "을(를) " << item->GetAmount() << "개 획득했다!" << endl;
+		// 기존 것이랑 중복된 아이템은 스택시키기
+		unordered_map<string, Item*>::iterator exist = stackItemHash.find(item->GetName());
+		if (exist == stackItemHash.end()) {
+			// 새로운 아이템
+			inventory.push_back(item);
+			stackItemHash[item->GetName()] = *(inventory.end() - 1);
+		}
+		else {
+			//기존에 있는 아이템
+			exist->second->StackItem(item->GetAmount());
+			delete item;
+		}
 	}
 	else {
-		//기존에 있는 아이템
-		exist->second->StackItem(item->GetAmount());
-		delete item;
+		cout << item->GetName() << "을(를) 획득했다!" << endl;
+		inventory.push_back(item);
 	}
 }
 
@@ -206,6 +207,9 @@ void TextRPG::ShopInteract()
 						else if (Scrap* scrap = dynamic_cast<Scrap*>(get)) {
 							GainItem(new Scrap(*scrap));
 						}
+						else if (HealthPotion* cons = dynamic_cast<HealthPotion*>(get)) {
+							GainItem(new HealthPotion(*cons));
+						}
 					}
 				}
 			}
@@ -262,6 +266,9 @@ void TextRPG::UseItem(Item* item)
 		cout << scrap->GetDescription() << endl;
 		cout << "상인이 개당 " << scrap->GetValue() << "골드에 사줄 것 같다" << endl;
 	}
+	else if (Consumable* cons = dynamic_cast<Consumable*>(item)) {
+		cons->Apply(player);
+	}
 }
 
 void TextRPG::TryToGetItem(GainChance c)
@@ -275,6 +282,10 @@ void TextRPG::TryToGetItem(GainChance c)
 			uniform_int_distribution<int> aDice(c.minAmount, c.maxAmount);
 			GainItem(new Scrap(*scrap, aDice(*Random::gen)));
 		}
+		else if (HealthPotion* potion = dynamic_cast<HealthPotion*>(c.item)) {
+			uniform_int_distribution<int> aDice(c.minAmount, c.maxAmount);
+			GainItem(new HealthPotion(*potion, aDice(*Random::gen)));
+		}
 	}
 }
 
@@ -282,7 +293,11 @@ int TextRPG::PrintInventory()
 {
 	int isize = inventory.size();
 	for (int i = 0; i < isize; i++) {
-		cout << i << ". " << inventory[i]->GetName() << endl;
+		cout << i << ". " << inventory[i]->GetName();
+		if (inventory[i]->isStackable()) {
+			cout << " " << inventory[i]->GetAmount() << "개";
+		}
+		cout << endl;
 	}
 
 	return isize;
@@ -314,6 +329,12 @@ bool TextRPG::RemoveItemSafely(vector<Item*>::iterator item)
 		stackItemHash.erase(scrap->GetName());
 		inventory.erase(item);
 		delete scrap;
+		return true;
+	}
+	else if (Consumable* cons = dynamic_cast<Consumable*>(*item)) {
+		stackItemHash.erase(cons->GetName());
+		inventory.erase(item);
+		delete cons;
 		return true;
 	}
 	cout << "Exception: 정의되지 않은 아이템 타입입니다 @ TextRPG::RemoveItemSafely" << endl;

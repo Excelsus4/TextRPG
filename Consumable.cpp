@@ -15,6 +15,11 @@ Consumable::Consumable(const Consumable & src):
 {
 }
 
+Consumable::Consumable(const Consumable & src, int mult):
+	Item(src), Name(src.Name), Description(src.Description), StackedAmount(src.StackedAmount* mult)
+{
+}
+
 void Consumable::StackItem(int amount)
 {
 	StackedAmount += amount;
@@ -28,6 +33,11 @@ int Consumable::Sell() const
 string Consumable::GetName() const
 {
 	return Name;
+}
+
+int Consumable::GetAmount() const
+{
+	return StackedAmount;
 }
 
 string Consumable::GetDescription() const

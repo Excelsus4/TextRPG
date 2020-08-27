@@ -10,7 +10,8 @@ public:
 	Scrap(const Scrap& src, int amount);
 	virtual string GetName() const override;
 	string GetDescription() const;
-	int GetAmount() const;
+	virtual int GetAmount() const override;
+	virtual bool isStackable() const override { return true; };
 	virtual void StackItem(int amount) override;
 	virtual int Sell() const override;
 private:

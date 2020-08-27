@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Item.h"
+
 class ShopNPC
 {
 public:

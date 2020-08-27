@@ -20,7 +20,13 @@ HealthPotion::HealthPotion(const HealthPotion & src):
 {
 }
 
+HealthPotion::HealthPotion(const HealthPotion & src, int mult):
+	Consumable(src, mult), Amount(src.Amount)
+{
+}
+
 void HealthPotion::Apply(Character * chara)
 {
+	cout << Name << "을(를) 사용했다!" << endl;
 	chara->Heal(Amount);
 }
