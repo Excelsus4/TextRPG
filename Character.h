@@ -15,6 +15,7 @@ public:
 	virtual ~Character();
 	Character(const Character& src);
 	virtual bool isAlive();
+	virtual void Heal(int amount);
 protected:
 	statistics Statistics;
 	status Status;

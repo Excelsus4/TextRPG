@@ -9,7 +9,6 @@ public:
 	Scrap(const Scrap& src);
 	Scrap(const Scrap& src, int amount);
 	virtual string GetName() const override;
-	virtual int GetValue() const override;
 	string GetDescription() const;
 	int GetAmount() const;
 	virtual void StackItem(int amount) override;
@@ -17,7 +16,6 @@ public:
 private:
 	string Name;
 	string Description;
-	int Value;
 	int StackedAmount;
 };
 

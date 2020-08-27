@@ -21,3 +21,10 @@ bool Character::isAlive()
 {
 	return Status.Hp > 0;
 }
+
+void Character::Heal(int amount)
+{
+	Status.Hp += amount;
+	if (Status.Hp > Statistics.Hp)
+		Status.Hp = Statistics.Hp;
+}

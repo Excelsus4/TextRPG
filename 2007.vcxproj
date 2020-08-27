@@ -21,8 +21,10 @@
   <ItemGroup>
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Consumable.cpp" />
     <ClCompile Include="Equipment.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="HealthPotion.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -42,9 +44,11 @@
   <ItemGroup>
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Character.h" />
+    <ClInclude Include="Consumable.h" />
     <ClInclude Include="Equipment.h" />
     <ClInclude Include="GainChance.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="HealthPotion.h" />
     <ClInclude Include="IDamager.h" />
     <ClInclude Include="IEngine.h" />
     <ClInclude Include="IEntity.h" />

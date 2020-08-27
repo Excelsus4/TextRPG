@@ -16,6 +16,8 @@
     <ClCompile Include="RandomEngine.cpp" />
     <ClCompile Include="Scrap.cpp" />
     <ClCompile Include="ShopNPC.cpp" />
+    <ClCompile Include="Consumable.cpp" />
+    <ClCompile Include="HealthPotion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -36,5 +38,7 @@
     <ClInclude Include="Scrap.h" />
     <ClInclude Include="GainChance.h" />
     <ClInclude Include="ShopNPC.h" />
+    <ClInclude Include="Consumable.h" />
+    <ClInclude Include="HealthPotion.h" />
   </ItemGroup>
 </Project>

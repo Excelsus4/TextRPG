@@ -13,13 +13,12 @@ class Equipment :
 	public Item
 {
 public:
-	Equipment(EquipmentType::slot sl, statistics stat);
+	Equipment(EquipmentType::slot sl, statistics stat, int value);
 	virtual ~Equipment();
 	Equipment(const Equipment& src);
 	EquipmentType::slot GetSlot() const { return Slot; };
 	statistics GetStat() const { return Statistics; };
 	virtual string GetName() const override;
-	virtual int GetValue() const override;
 	virtual void StackItem(int amount) override;
 	virtual int Sell() const override;
 private:

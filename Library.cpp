@@ -14,7 +14,7 @@ Library::Library()
 	stat.Level = 0;
 	stat.Strength = 0;
 	stat.Agility = 0;
-	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat));
+	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat, 25));
 
 	stat.Name = "가죽 튜닉";
 	stat.Hp = 25;
@@ -22,7 +22,7 @@ Library::Library()
 	stat.Level = 0;
 	stat.Strength = 0;
 	stat.Agility = 0;
-	EquipmentBook.push_back(new Equipment(EquipmentType::BodyArmor, stat));
+	EquipmentBook.push_back(new Equipment(EquipmentType::BodyArmor, stat, 10));
 
 	stat.Name = "전설의 엑스칼리버";
 	stat.Hp = 80;
@@ -30,7 +30,7 @@ Library::Library()
 	stat.Level = 0;
 	stat.Strength = 30;
 	stat.Agility = 15;
-	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat));
+	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat, 1500));
 
 	stat.Name = "요도 무라마사";
 	stat.Hp = -10;
@@ -38,7 +38,7 @@ Library::Library()
 	stat.Level = 0;
 	stat.Strength = 0;
 	stat.Agility = 20;
-	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat));
+	EquipmentBook.push_back(new Equipment(EquipmentType::Weapon, stat, 300));
 
 	// 스크랩 프로토타입 생성
 	ScrapBook.push_back(new Scrap("고블린의 귀", "신선하게 잘라낸 녹색 귀", 4));
